@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKTech — Cloud Computing Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   AKTECH — APPLE GLASS DESIGN SYSTEM
+═══════════════════════════════════════════════════ */
+:root {
+  --brand:       #0ea5e9;
+  --brand-dark:  #0284c7;
+  --brand-light: #38bdf8;
+  --accent:      #6366f1;
+  --accent2:     #a855f7;
+  --green:       #10b981;
+  --orange:      #f59e0b;
+  --red:         #ef4444;
+
+  --glass:        rgba(255,255,255,0.06);
+  --glass-md:     rgba(255,255,255,0.10);
+  --glass-strong: rgba(255,255,255,0.15);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-bright: rgba(255,255,255,0.24);
+
+  --blur:    blur(40px);
+  --blur-md: blur(20px);
+  --blur-sm: blur(10px);
+
+  --bg:  #060914;
+  --bg2: #080c18;
+  --text:      rgba(255,255,255,0.94);
+  --text-muted:rgba(255,255,255,0.54);
+  --text-dim:  rgba(255,255,255,0.28);
+
+  --r-xs: 10px;
+  --r-sm: 14px;
+  --r:    20px;
+  --r-lg: 28px;
+  --r-xl: 38px;
+
+  --shadow:    0 8px 48px rgba(0,0,0,0.65);
+  --shadow-sm: 0 4px 24px rgba(0,0,0,0.45);
+  --glow-blue: 0 0 48px rgba(14,165,233,0.30);
+  --glow-purple:0 0 40px rgba(99,102,241,0.25);
+
+  --ease: cubic-bezier(0.4,0,0.2,1);
+  --spring: cubic-bezier(0.34,1.56,0.64,1);
+  --t: 0.28s;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ─── ANIMATED MESH BG ─── */
+#bg-mesh{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(130px);opacity:0.16;
+  animation:float-orb 22s ease-in-out infinite;
+}
+.o1{width:900px;height:900px;background:radial-gradient(#0ea5e9,#0284c7);top:-300px;left:-200px;animation-delay:0s;}
+.o2{width:600px;height:600px;background:radial-gradient(#6366f1,#a855f7);top:30%;right:-150px;animation-delay:-8s;}
+.o3{width:500px;height:500px;background:radial-gradient(#10b981,#0ea5e9);bottom:-100px;left:25%;animation-delay:-16s;}
+.o4{width:350px;height:350px;background:radial-gradient(#a855f7,#6366f1);bottom:15%;right:10%;animation-delay:-4s;opacity:0.10;}
+@keyframes float-orb{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(50px,-40px) scale(1.06);}
+  66%{transform:translate(-30px,25px) scale(0.96);}
+}
+
+/* ─── GRID DOTS ─── */
+#bg-mesh::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+
+/* ─── NAVBAR ─── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;gap:0;
+  padding:0 40px;height:68px;
+  background:rgba(6,9,20,0.72);
+  backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur);
+  border-bottom:1px solid var(--glass-border);
+}
+#nav::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(14,165,233,0.4),transparent);
+}
+
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;margin-right:44px;flex-shrink:0;
+}
+.nav-logo{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:16px;color:#fff;
+  box-shadow:var(--glow-blue),0 2px 10px rgba(0,0,0,0.4);
+  letter-spacing:-1px;
+}
+.nav-brand-name{
+  font-size:19px;font-weight:800;letter-spacing:-0.4px;
+  background:linear-gradient(135deg,#38bdf8,#818cf8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-brand-tag{
+  font-size:10px;font-weight:600;color:var(--text-dim);
+  letter-spacing:0.08em;text-transform:uppercase;margin-left:2px;
+  -webkit-text-fill-color:rgba(255,255,255,0.3);
+}
+
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 15px;border-radius:var(--r-sm);
+  font-size:13.5px;font-weight:500;
+  color:var(--text-muted);cursor:pointer;
+  border:none;background:transparent;
+  transition:all var(--t) var(--ease);
+  white-space:nowrap;letter-spacing:0.01em;
+}
+.nav-btn svg{opacity:0.65;flex-shrink:0;width:15px;height:15px;}
+.nav-btn:hover{color:var(--text);background:var(--glass);}
+.nav-btn.active{
+  color:#fff;background:var(--glass-md);
+  border:1px solid var(--glass-border);
+}
+.nav-btn.active svg{opacity:1;color:var(--brand);}
+
+.nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+
+.clock-pill{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 14px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:50px;font-size:12px;font-weight:500;color:var(--text-muted);
+  font-variant-numeric:tabular-nums;
+}
+.clock-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 0 rgba(16,185,129,0.6);
+  animation:pulse-green 2s ease infinite;
+}
+@keyframes pulse-green{
+  0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.6);}
+  50%{box-shadow:0 0 0 5px rgba(16,185,129,0);}
+}
+
+.cta-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 20px;border-radius:var(--r-sm);
+  font-size:13px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  border:none;cursor:pointer;
+  box-shadow:var(--glow-blue),0 2px 14px rgba(0,0,0,0.4);
+  transition:all var(--t) var(--ease);
+}
+.cta-btn:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 0 60px rgba(14,165,233,0.45),0 4px 20px rgba(0,0,0,0.5);}
+
+/* ─── PAGES ─── */
+.page{display:none;min-height:100vh;position:relative;z-index:1;padding-top:68px;}
+.page.active{display:block;}
+
+/* ═══ HOME ═══ */
+.hero{
+  position:relative;
+  min-height:calc(100vh - 68px);
+  display:flex;align-items:center;
+  padding:60px 80px;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,transparent 40%,var(--bg) 100%),
+    radial-gradient(ellipse at 60% 30%,rgba(14,165,233,0.08) 0%,transparent 60%);
+}
+#hero-canvas{position:absolute;inset:0;pointer-events:none;}
+
+.hero-left{
+  position:relative;z-index:2;
+  max-width:640px;
+  flex:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px 5px 6px;
+  background:rgba(14,165,233,0.12);
+  border:1px solid rgba(14,165,233,0.28);
+  border-radius:50px;
+  font-size:12px;font-weight:600;color:#38bdf8;
+  letter-spacing:0.04em;text-transform:uppercase;
+  margin-bottom:24px;
+  backdrop-filter:var(--blur-sm);
+  animation:fadeUp 0.6s var(--ease) both;
+}
+.hero-badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#0ea5e9;
+  animation:pulse-blue 2s ease infinite;
+}
+@keyframes pulse-blue{
+  0%,100%{box-shadow:0 0 0 0 rgba(14,165,233,0.7);}
+  50%{box-shadow:0 0 0 6px rgba(14,165,233,0);}
+}
+
+.hero-title{
+  font-size:clamp(44px,5.5vw,76px);
+  font-weight:900;line-height:1.0;
+  letter-spacing:-2.5px;
+  margin-bottom:20px;
+  animation:fadeUp 0.6s var(--ease) 0.1s both;
+}
+.hero-title .grad{
+  background:linear-gradient(135deg,#38bdf8 0%,#818cf8 50%,#c084fc 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-subtitle{
+  font-size:clamp(16px,1.6vw,20px);
+  line-height:1.65;
+  color:var(--text-muted);
+  margin-bottom:36px;
+  max-width:520px;
+  animation:fadeUp 0.6s var(--ease) 0.2s both;
+}
+.hero-actions{
+  display:flex;gap:14px;flex-wrap:wrap;
+  animation:fadeUp 0.6s var(--ease) 0.3s both;
+}
+
+.btn-primary{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 32px;border-radius:var(--r-sm);
+  font-size:15px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  border:none;cursor:pointer;
+  box-shadow:var(--glow-blue),0 4px 20px rgba(0,0,0,0.4);
+  transition:all var(--t) var(--spring);
+  letter-spacing:0.01em;
+}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 70px rgba(14,165,233,0.5),0 8px 32px rgba(0,0,0,0.5);}
+
+.btn-outline{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 28px;border-radius:var(--r-sm);
+  font-size:15px;font-weight:600;color:var(--text);
+  background:var(--glass-md);
+  border:1px solid var(--glass-bright);
+  cursor:pointer;
+  backdrop-filter:var(--blur-sm);
+  transition:all var(--t) var(--ease);
+}
+.btn-outline:hover{background:var(--glass-strong);transform:translateY(-2px);}
+
+.hero-stats{
+  display:flex;gap:32px;margin-top:48px;padding-top:36px;
+  border-top:1px solid var(--glass-border);
+  animation:fadeUp 0.6s var(--ease) 0.4s both;
+}
+.hero-stat{}
+.hero-stat-num{
+  font-size:28px;font-weight:900;letter-spacing:-1px;
+  background:linear-gradient(135deg,#38bdf8,#818cf8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-stat-label{font-size:12px;color:var(--text-muted);margin-top:2px;font-weight:500;}
+
+.hero-right{
+  position:relative;z-index:2;flex:1;
+  display:flex;justify-content:flex-end;align-items:center;
+}
+
+/* Cloud graphic card */
+.cloud-card{
+  width:380px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  padding:24px;
+  backdrop-filter:var(--blur-md);
+  box-shadow:var(--shadow),var(--glow-blue);
+  animation:fadeUp 0.7s var(--ease) 0.2s both;
+}
+.cloud-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.cloud-card-title{font-size:13px;font-weight:600;color:var(--text-muted);}
+.live-badge{
+  display:flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:50px;
+  background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);
+  font-size:10px;font-weight:700;color:#10b981;letter-spacing:0.05em;
+}
+.mini-chart{
+  display:flex;align-items:flex-end;gap:4px;
+  height:60px;margin-bottom:20px;
+}
+.mini-bar{
+  flex:1;border-radius:4px 4px 0 0;
+  background:linear-gradient(to top,#0ea5e9,#6366f1);
+  opacity:0.8;
+  animation:barGrow 0.6s var(--spring) both;
+}
+@keyframes barGrow{from{transform:scaleY(0);transform-origin:bottom;}to{transform:scaleY(1);}}
+
+.metrics-row{display:flex;gap:10px;margin-bottom:16px;}
+.metric-pill{
+  flex:1;padding:10px 14px;
+  background:var(--glass-md);border:1px solid var(--glass-border);
+  border-radius:var(--r-sm);
+  display:flex;flex-direction:column;gap:4px;
+}
+.metric-val{font-size:18px;font-weight:800;letter-spacing:-0.5px;}
+.metric-val.blue{color:#38bdf8;}
+.metric-val.green{color:#10b981;}
+.metric-val.purple{color:#a78bfa;}
+.metric-label{font-size:10px;color:var(--text-muted);font-weight:500;}
+
+.node-row{display:flex;gap:8px;flex-wrap:wrap;}
+.node-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--r-sm);
+  font-size:11px;font-weight:500;color:var(--text-muted);
+}
+.node-dot{width:6px;height:6px;border-radius:50%;}
+.nd-green{background:#10b981;}
+.nd-blue{background:#38bdf8;}
+.nd-purple{background:#a78bfa;}
+.nd-orange{background:#f59e0b;}
+
+/* ─── SECTION WRAPPER ─── */
+.section{padding:80px 60px;}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--brand-light);margin-bottom:14px;
+}
+.section-label svg{width:14px;height:14px;}
+.section-title{
+  font-size:clamp(30px,3.5vw,46px);
+  font-weight:900;letter-spacing:-1.5px;
+  margin-bottom:14px;
+  line-height:1.05;
+}
+.section-sub{
+  font-size:16px;line-height:1.7;
+  color:var(--text-muted);max-width:560px;margin-bottom:48px;
+}
+
+/* ─── FEATURE CARDS ─── */
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+}
+.feat-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r);
+  padding:28px;
+  backdrop-filter:var(--blur-sm);
+  transition:all 0.32s var(--spring);
+  position:relative;
+  overflow:hidden;
+}
+.feat-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 0 0,rgba(14,165,233,0.06),transparent 60%);
+  opacity:0;transition:opacity var(--t);
+}
+.feat-card:hover{transform:translateY(-6px);border-color:rgba(14,165,233,0.25);box-shadow:var(--shadow),0 0 30px rgba(14,165,233,0.12);}
+.feat-card:hover::before{opacity:1;}
+
+.feat-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:18px;
+  background:var(--glass-md);border:1px solid var(--glass-border);
+}
+.feat-title{font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px;}
+.feat-desc{font-size:13.5px;line-height:1.65;color:var(--text-muted);}
+.feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px;}
+.feat-tag{
+  padding:3px 10px;border-radius:50px;
+  font-size:10px;font-weight:600;
+  background:var(--glass);border:1px solid var(--glass-border);
+  color:var(--text-muted);letter-spacing:0.04em;
+}
+
+/* ═══ SERVICES ═══ */
+.services-hero{padding:60px 60px 0;}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:24px;
+  padding:40px 60px 80px;
+}
+.svc-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  backdrop-filter:var(--blur-sm);
+  transition:all 0.35s var(--spring);
+  cursor:pointer;
+}
+.svc-card:hover{transform:translateY(-8px);border-color:rgba(99,102,241,0.35);box-shadow:var(--shadow),var(--glow-purple);}
+.svc-thumb{
+  height:180px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:64px;position:relative;overflow:hidden;
+}
+.svc-thumb-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--tc1,#060914),var(--tc2,#0d1228));
+}
+.svc-thumb-glow{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  background:var(--tglow,rgba(14,165,233,0.2));
+  filter:blur(40px);
+}
+.svc-thumb-emoji{position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(255,255,255,0.3));}
+.svc-badge{
+  position:absolute;top:12px;right:12px;z-index:2;
+  padding:3px 10px;border-radius:6px;
+  font-size:10px;font-weight:800;letter-spacing:0.05em;
+}
+.sb-new{background:rgba(16,185,129,0.85);}
+.sb-hot{background:rgba(239,68,68,0.85);}
+.sb-beta{background:rgba(99,102,241,0.85);}
+.sb-core{background:rgba(14,165,233,0.85);}
+.svc-body{padding:24px;}
+.svc-name{font-size:18px;font-weight:800;letter-spacing:-0.4px;margin-bottom:8px;}
+.svc-desc{font-size:13px;line-height:1.65;color:var(--text-muted);margin-bottom:16px;}
+.svc-features{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.svc-features li{
+  font-size:12px;color:var(--text-muted);
+  display:flex;align-items:center;gap:8px;
+}
+.svc-features li::before{content:'✓';color:var(--brand-light);font-weight:700;font-size:12px;}
+.svc-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:20px;padding-top:16px;
+  border-top:1px solid var(--glass-border);
+}
+.svc-price{font-size:20px;font-weight:900;letter-spacing:-0.5px;color:#38bdf8;}
+.svc-price span{font-size:12px;font-weight:500;color:var(--text-dim);}
+
+/* ═══ ARCHITECTURE ═══ */
+.arch-wrap{padding:60px;}
+.arch-diagram{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  padding:40px;
+  backdrop-filter:var(--blur-sm);
+  margin-bottom:40px;
+  position:relative;
+  overflow:hidden;
+}
+.arch-diagram-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 30% 40%,rgba(14,165,233,0.06),transparent 50%),
+    radial-gradient(ellipse at 70% 60%,rgba(99,102,241,0.06),transparent 50%);
+}
+.arch-layers{position:relative;z-index:1;}
+.arch-layer{
+  background:var(--glass-md);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r);
+  padding:20px 24px;
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:20px;
+  transition:all var(--t) var(--ease);
+}
+.arch-layer:hover{border-color:rgba(14,165,233,0.3);background:var(--glass-strong);}
+.arch-layer-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.arch-layer-info{flex:1;}
+.arch-layer-name{font-size:15px;font-weight:700;margin-bottom:4px;}
+.arch-layer-desc{font-size:12px;color:var(--text-muted);}
+.arch-layer-nodes{
+  display:flex;gap:8px;
+}
+.arch-node{
+  padding:4px 12px;border-radius:50px;
+  font-size:11px;font-weight:600;
+  background:var(--glass);border:1px solid var(--glass-border);
+  color:var(--text-muted);
+}
+.arch-arrow{
+  text-align:center;padding:6px;color:var(--text-dim);font-size:20px;
+  margin-bottom:4px;
+}
+
+.arch-specs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.spec-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r);
+  padding:20px;
+  backdrop-filter:var(--blur-sm);
+}
+.spec-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.spec-title svg{color:var(--brand);}
+.spec-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 0;border-bottom:1px solid var(--glass-border);
+  font-size:12px;
+}
+.spec-row:last-child{border:none;}
+.spec-key{color:var(--text-muted);}
+.spec-val{font-weight:600;color:#38bdf8;}
+
+/* ═══ PRICING ═══ */
+.pricing-wrap{padding:60px;}
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:24px;
+  margin-top:0;
+}
+.plan-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  padding:32px;
+  backdrop-filter:var(--blur-sm);
+  position:relative;
+  overflow:hidden;
+  transition:all 0.35s var(--spring);
+}
+.plan-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+.plan-card.featured{
+  background:linear-gradient(160deg,rgba(14,165,233,0.10),rgba(99,102,241,0.10));
+  border-color:rgba(99,102,241,0.35);
+  box-shadow:var(--glow-purple);
+}
+.plan-card.featured::before{
+  content:'Most Popular';
+  position:absolute;top:16px;right:16px;
+  padding:3px 12px;border-radius:50px;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  font-size:10px;font-weight:800;letter-spacing:0.05em;
+}
+.plan-name{font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.plan-price{
+  font-size:42px;font-weight:900;letter-spacing:-2px;
+  margin-bottom:4px;line-height:1;
+}
+.plan-price sup{font-size:20px;font-weight:700;vertical-align:top;margin-top:10px;color:var(--text-muted);}
+.plan-price .period{font-size:14px;font-weight:500;color:var(--text-muted);}
+.plan-desc{font-size:13px;color:var(--text-muted);margin-bottom:24px;margin-top:8px;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.plan-features li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.5;
+}
+.pf-check{
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;
+}
+.pf-yes{background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.4);color:#10b981;}
+.pf-no{background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dim);}
+.plan-cta{
+  width:100%;padding:13px;border-radius:var(--r-sm);
+  font-size:14px;font-weight:700;cursor:pointer;
+  transition:all var(--t) var(--ease);
+}
+.plan-cta-outline{
+  background:transparent;border:1px solid var(--glass-bright);color:var(--text);
+}
+.plan-cta-outline:hover{background:var(--glass-md);}
+.plan-cta-solid{
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);border:none;color:#fff;
+  box-shadow:var(--glow-blue);
+}
+.plan-cta-solid:hover{box-shadow:0 0 60px rgba(14,165,233,0.45);}
+
+/* ═══ DASHBOARD ═══ */
+.dash-wrap{padding:32px 40px;}
+.dash-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:28px;
+}
+.dash-title{font-size:24px;font-weight:800;letter-spacing:-0.5px;}
+.dash-subtitle{font-size:13px;color:var(--text-muted);margin-top:4px;}
+.dash-actions{display:flex;gap:10px;align-items:center;}
+.dash-refresh{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:var(--r-sm);
+  background:var(--glass);border:1px solid var(--glass-border);
+  font-size:12px;font-weight:600;color:var(--text-muted);
+  cursor:pointer;transition:all var(--t);
+}
+.dash-refresh:hover{background:var(--glass-md);color:var(--text);}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:16px;margin-bottom:28px;
+}
+.kpi-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r);
+  padding:20px;
+  backdrop-filter:var(--blur-sm);
+  transition:all var(--t) var(--ease);
+}
+.kpi-card:hover{background:var(--glass-md);transform:translateY(-3px);}
+.kpi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.kpi-icon{font-size:20px;}
+.kpi-trend{
+  font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:50px;
+}
+.trend-up{background:rgba(16,185,129,0.15);color:#10b981;}
+.trend-dn{background:rgba(239,68,68,0.15);color:#ef4444;}
+.trend-ne{background:rgba(255,255,255,0.08);color:var(--text-muted);}
+.kpi-val{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:4px;}
+.kpi-lbl{font-size:12px;color:var(--text-muted);font-weight:500;}
+.kpi-sub{font-size:11px;color:var(--text-dim);margin-top:2px;}
+
+.dash-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;margin-bottom:28px;
+}
+.dash-panel{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r);
+  padding:24px;
+  backdrop-filter:var(--blur-sm);
+}
+.panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.panel-title{font-size:14px;font-weight:700;}
+.panel-badge{
+  font-size:11px;font-weight:600;padding:3px 10px;
+  border-radius:50px;
+  background:rgba(14,165,233,0.12);border:1px solid rgba(14,165,233,0.24);
+  color:#38bdf8;
+}
+
+/* SVG Chart */
+.chart-wrap{position:relative;height:160px;}
+.chart-svg{width:100%;height:100%;}
+
+/* Region table */
+.region-list{display:flex;flex-direction:column;gap:10px;}
+.region-row{
+  display:flex;align-items:center;gap:12px;
+}
+.region-flag{font-size:18px;flex-shrink:0;}
+.region-info{flex:1;}
+.region-name{font-size:13px;font-weight:600;margin-bottom:2px;}
+.region-bar-wrap{height:4px;background:var(--glass-md);border-radius:2px;overflow:hidden;}
+.region-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,#0ea5e9,#6366f1);transition:width 0.8s var(--ease);}
+.region-pct{font-size:12px;font-weight:700;color:#38bdf8;flex-shrink:0;}
+
+.dash-bottom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+.log-list{display:flex;flex-direction:column;gap:6px;}
+.log-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 12px;border-radius:var(--r-xs);
+  background:var(--glass);border:1px solid var(--glass-border);
+  font-size:11px;
+}
+.log-lvl{
+  padding:2px 7px;border-radius:4px;
+  font-size:9px;font-weight:800;letter-spacing:0.05em;flex-shrink:0;margin-top:1px;
+}
+.log-info{background:rgba(14,165,233,0.15);color:#38bdf8;}
+.log-warn{background:rgba(245,158,11,0.15);color:#f59e0b;}
+.log-err{background:rgba(239,68,68,0.15);color:#ef4444;}
+.log-ok{background:rgba(16,185,129,0.15);color:#10b981;}
+.log-msg{color:var(--text-muted);line-height:1.5;}
+.log-time{color:var(--text-dim);flex-shrink:0;font-variant-numeric:tabular-nums;}
+
+.sla-item{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--glass-border);
+}
+.sla-item:last-child{border:none;}
+.sla-icon{font-size:18px;}
+.sla-info{flex:1;}
+.sla-name{font-size:13px;font-weight:600;}
+.sla-val{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.sla-status{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+}
+.sla-up{background:#10b981;box-shadow:0 0 8px rgba(16,185,129,0.5);}
+.sla-warn{background:#f59e0b;box-shadow:0 0 8px rgba(245,158,11,0.5);}
+
+/* ═══ ABOUT ═══ */
+.about-wrap{padding:60px;}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;
+  margin-bottom:60px;
+}
+.about-img-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);padding:32px;
+  backdrop-filter:var(--blur-sm);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:16px;
+}
+.about-logo-big{
+  width:90px;height:90px;border-radius:26px;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;font-weight:900;color:#fff;
+  box-shadow:var(--glow-blue),var(--shadow-sm);
+}
+.about-name-big{font-size:28px;font-weight:900;letter-spacing:-0.5px;}
+.about-tagline{font-size:14px;color:var(--text-muted);line-height:1.6;}
+.about-team-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;width:100%;
+}
+.team-pill{
+  padding:10px 14px;
+  background:var(--glass-md);border:1px solid var(--glass-border);
+  border-radius:var(--r-sm);text-align:left;
+}
+.team-role{font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;}
+.team-name{font-size:13px;font-weight:700;}
+
+.about-info{}
+.about-section-title{font-size:20px;font-weight:800;letter-spacing:-0.4px;margin-bottom:12px;}
+.about-p{font-size:14px;line-height:1.75;color:var(--text-muted);margin-bottom:20px;}
+.about-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.about-pill{
+  padding:6px 16px;border-radius:50px;
+  font-size:12px;font-weight:600;
+  background:var(--glass-md);border:1px solid var(--glass-border);
+  color:var(--text-muted);
+}
+.timeline{border-left:2px solid var(--glass-border);padding-left:24px;display:flex;flex-direction:column;gap:20px;}
+.tl-item{}
+.tl-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  margin-left:-30px;float:left;margin-top:4px;margin-right:18px;
+  box-shadow:0 0 12px rgba(14,165,233,0.5);
+}
+.tl-date{font-size:11px;font-weight:700;color:#38bdf8;margin-bottom:4px;letter-spacing:0.04em;}
+.tl-text{font-size:13px;line-height:1.6;color:var(--text-muted);}
+
+.contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;
+}
+.contact-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--r);padding:24px;
+  backdrop-filter:var(--blur-sm);
+  transition:all var(--t) var(--spring);
+}
+.contact-card:hover{transform:translateY(-4px);border-color:rgba(14,165,233,0.25);}
+.contact-icon{font-size:28px;margin-bottom:12px;}
+.contact-label{font-size:12px;font-weight:600;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
+.contact-val{font-size:15px;font-weight:700;color:#38bdf8;}
+
+/* ─── GLASS PILL / BADGE ─── */
+.g-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:50px;
+  font-size:11px;font-weight:600;
+  background:var(--glass-md);border:1px solid var(--glass-border);
+  color:var(--text-muted);
+}
+
+/* ─── TOAST ─── */
+#toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  padding:13px 22px;
+  background:var(--glass-strong);
+  border:1px solid var(--glass-bright);
+  border-radius:var(--r-sm);
+  backdrop-filter:var(--blur);
+  font-size:13.5px;font-weight:500;
+  z-index:9999;
+  transition:transform 0.4s var(--spring);
+  pointer-events:none;white-space:nowrap;
+  box-shadow:var(--shadow);
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(22px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.au{animation:fadeUp 0.5s var(--ease) both;}
+.au1{animation-delay:0.05s;}
+.au2{animation-delay:0.10s;}
+.au3{animation-delay:0.15s;}
+.au4{animation-delay:0.20s;}
+.au5{animation-delay:0.25s;}
+
+/* ─── TRUSTED BY ─── */
+.trusted-wrap{
+  padding:0 60px 64px;
+  position:relative;
+}
+.trusted-label{
+  text-align:center;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-dim);margin-bottom:20px;
+}
+.trusted-logos{
+  display:flex;align-items:stretch;justify-content:stretch;
+  padding:0;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  backdrop-filter:var(--blur-sm);
+  position:relative;overflow:hidden;
+}
+.trusted-logos::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(14,165,233,0.04),transparent 70%);
+  pointer-events:none;
+}
+.tlogo-item{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:22px 16px;
+  position:relative;z-index:1;
+  transition:all 0.3s var(--ease);
+  border-right:1px solid var(--glass-border);
+  cursor:default;
+  min-width:0;
+}
+.tlogo-item:last-child{border-right:none;}
+.tlogo-item:hover{background:rgba(255,255,255,0.04);}
+.tlogo-inner{
+  display:flex;align-items:center;gap:9px;
+  white-space:nowrap;
+  opacity:0.45;
+  transition:opacity 0.3s var(--ease);
+}
+.tlogo-item:hover .tlogo-inner{opacity:0.9;}
+.tlogo-text{
+  font-size:14px;
+  font-family:'Inter',-apple-system,sans-serif;
+  letter-spacing:0.01em;
+}
+
+/* ─── SCROLL ─── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:3px;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  #nav{padding:0 20px;}
+  .nav-btn span{display:none;}
+  .nav-brand-tag{display:none;}
+  .hero{padding:40px 24px;flex-direction:column;gap:40px;}
+  .hero-right{justify-content:center;}
+  .cloud-card{width:100%;max-width:420px;}
+  .section{padding:60px 24px;}
+  .services-hero,.arch-wrap,.pricing-wrap,.dash-wrap,.about-wrap{padding-left:24px;padding-right:24px;}
+  .services-grid{padding:24px 24px 60px;}
+  .about-grid{grid-template-columns:1fr;}
+  .dash-grid{grid-template-columns:1fr;}
+  .dash-bottom-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div id="bg-mesh">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="orb o4"></div>
+</div>
+
+<!-- ══════════════ STATUS TICKER ══════════════ -->
+<div id="status-ticker">
+  <div class="ticker-inner">
+    <span class="ticker-live"><span class="clock-dot" style="width:6px;height:6px;display:inline-block;border-radius:50%;background:#10b981;animation:pulse-green 2s infinite;margin-right:6px;"></span>ALL SYSTEMS OPERATIONAL</span>
+    <div class="ticker-track" id="ticker-track"></div>
+  </div>
+</div>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav id="nav">
+  <a class="nav-brand" href="#" onclick="showPage('home');return false;">
+    <div class="nav-logo">AK</div>
+    <span class="nav-brand-name">AKTech</span>
+    <span class="nav-brand-tag">Cloud</span>
+  </a>
+  <div class="nav-links">
+    <button class="nav-btn active" data-page="home" onclick="showPage('home')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" data-page="services" onclick="showPage('services')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>Services</span>
+    </button>
+    <button class="nav-btn" data-page="architecture" onclick="showPage('architecture')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M9 19h6M12 11l-4 6M12 11l4 6"/></svg>
+      <span>Architecture</span>
+    </button>
+    <button class="nav-btn" data-page="pricing" onclick="showPage('pricing')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      <span>Pricing</span>
+    </button>
+    <button class="nav-btn" data-page="dashboard" onclick="showPage('dashboard')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <button class="nav-btn" data-page="about" onclick="showPage('about')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>About</span>
+    </button>
+  </div>
+  <div class="nav-right">
+    <div class="clock-pill">
+      <div class="clock-dot"></div>
+      <span id="clock">00:00:00</span>
+    </div>
+    <button class="cta-btn" onclick="showToast('Welcome to AKTech Cloud! 🚀')">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+      Get Started
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-bg"></div>
+
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        ☁ Cloud Computing Platform — AKTech 2024
+      </div>
+      <h1 class="hero-title">
+        Next-Gen<br>
+        <span class="grad">Cloud</span><br>
+        Infrastructure
+      </h1>
+      <p class="hero-subtitle">
+        AKTech delivers enterprise-grade cloud computing with unmatched scalability, security, and performance. Deploy globally in seconds — built for the future of digital workloads.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('services')">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+          Explore Services
+        </button>
+        <button class="btn-outline" onclick="showPage('architecture')">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M9 19h6M12 11l-4 6M12 11l4 6"/></svg>
+          View Architecture
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="stat-uptime">99.99%</div>
+          <div class="hero-stat-label">SLA Uptime</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">18</div>
+          <div class="hero-stat-label">Global Regions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="stat-servers">4,800+</div>
+          <div class="hero-stat-label">Active Servers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">0ms</div>
+          <div class="hero-stat-label">Cold-Start Goal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="cloud-card">
+        <div class="cloud-card-header">
+          <div class="cloud-card-title">Live Cluster Health</div>
+          <div class="live-badge">
+            <div class="clock-dot" style="width:5px;height:5px;"></div>
+            LIVE
+          </div>
+        </div>
+        <div class="mini-chart" id="mini-chart"></div>
+        <div class="metrics-row">
+          <div class="metric-pill">
+            <div class="metric-val blue" id="m-cpu">68%</div>
+            <div class="metric-label">CPU Load</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-val green" id="m-mem">42%</div>
+            <div class="metric-label">Memory</div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-val purple" id="m-net">1.2 Gbps</div>
+            <div class="metric-label">Network I/O</div>
+          </div>
+        </div>
+        <div class="node-row">
+          <div class="node-pill"><div class="node-dot nd-green"></div>us-east-1</div>
+          <div class="node-pill"><div class="node-dot nd-blue"></div>eu-west-1</div>
+          <div class="node-pill"><div class="node-dot nd-purple"></div>ap-south-1</div>
+          <div class="node-pill"><div class="node-dot nd-orange"></div>sa-east-1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trusted By Section -->
+  <div class="trusted-wrap">
+    <div class="trusted-label">Trusted by teams at</div>
+    <div class="trusted-logos">
+
+      <!-- Microsoft -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0"  y="0"  width="10" height="10" fill="#F25022"/>
+            <rect x="11" y="0"  width="10" height="10" fill="#7FBA00"/>
+            <rect x="0"  y="11" width="10" height="10" fill="#00A4EF"/>
+            <rect x="11" y="11" width="10" height="10" fill="#FFB900"/>
+          </svg>
+          <span class="tlogo-text" style="color:rgba(255,255,255,0.7);font-weight:600;">Microsoft</span>
+        </div>
+      </div>
+
+      <!-- Google -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          <span class="tlogo-text" style="font-weight:700;background:linear-gradient(90deg,#4285F4,#EA4335,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Google</span>
+        </div>
+      </div>
+
+      <!-- AWS -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="38" height="22" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="22" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="900" fill="rgba(255,255,255,0.75)" letter-spacing="2">AWS</text>
+            <path d="M6 28 Q30 36 54 28" stroke="#FF9900" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="36" height="20" viewBox="0 0 58 32" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="meta-g" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0082FB"/>
+                <stop offset="100%" stop-color="#0099FF"/>
+              </linearGradient>
+            </defs>
+            <!-- Left loop -->
+            <ellipse cx="14" cy="20" rx="12" ry="9" fill="none" stroke="url(#meta-g)" stroke-width="4.5"/>
+            <!-- Right loop -->
+            <path d="M26 20 C26 12 30 8 36 8 C42 8 46 12 46 20 C46 26 42 28 38 28 C34 28 30 24 26 20 Z" fill="url(#meta-g)"/>
+          </svg>
+          <span class="tlogo-text" style="color:rgba(255,255,255,0.7);font-weight:700;">Meta</span>
+        </div>
+      </div>
+
+      <!-- NVIDIA -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <rect width="22" height="22" rx="4" fill="#76B900"/>
+            <text x="11" y="16" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="900" fill="white" text-anchor="middle">N</text>
+          </svg>
+          <span class="tlogo-text" style="color:rgba(255,255,255,0.7);font-weight:700;letter-spacing:0.05em;">NVIDIA</span>
+        </div>
+      </div>
+
+      <!-- IBM -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="52" height="20" viewBox="0 0 52 20" xmlns="http://www.w3.org/2000/svg">
+            <!-- I -->
+            <rect x="0" y="2" width="8" height="2.5" fill="#1F70C1"/>
+            <rect x="2.5" y="4.5" width="3" height="9" fill="#1F70C1"/>
+            <rect x="0" y="13.5" width="8" height="2.5" fill="#1F70C1"/>
+            <!-- B -->
+            <rect x="12" y="2" width="3" height="14" fill="#1F70C1"/>
+            <rect x="15" y="2" width="8" height="2.5" fill="#1F70C1"/>
+            <rect x="15" y="7" width="8" height="2.5" fill="#1F70C1"/>
+            <rect x="15" y="11.5" width="8" height="2.5" fill="#1F70C1"/>
+            <rect x="23" y="2" width="2" height="5.5" rx="1" fill="#1F70C1"/>
+            <rect x="23" y="9.5" width="2" height="6.5" rx="1" fill="#1F70C1"/>
+            <!-- M -->
+            <rect x="29" y="2" width="3" height="14" fill="#1F70C1"/>
+            <rect x="32" y="2" width="6" height="2.5" fill="#1F70C1"/>
+            <rect x="38" y="2" width="3" height="14" fill="#1F70C1"/>
+            <rect x="32" y="7" width="6" height="2.5" fill="#1F70C1"/>
+            <rect x="29" y="13.5" width="12" height="2.5" fill="#1F70C1"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Oracle -->
+      <div class="tlogo-item">
+        <div class="tlogo-inner">
+          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="11" cy="11" rx="10" ry="10" fill="#F80000"/>
+            <text x="11" y="15" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="900" fill="white" text-anchor="middle">ORA</text>
+          </svg>
+          <span class="tlogo-text" style="color:#F80000;font-weight:700;letter-spacing:0.04em;">Oracle</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="section">
+    <div class="section-label">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+      Why AKTech
+    </div>
+    <h2 class="section-title">Built for the<br><span class="grad" style="background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Modern Enterprise</span></h2>
+    <p class="section-sub">AKTech Cloud combines cutting-edge hardware, intelligent orchestration, and a developer-first API to give your team the power it needs.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">Bare-Metal Performance</div>
+        <div class="feat-desc">Dedicated hardware with no virtualization overhead. Achieve peak throughput for compute-intensive workloads with our latest AMD EPYC and Intel Xeon processors.</div>
+        <div class="feat-tags"><span class="feat-tag">EPYC 4th Gen</span><span class="feat-tag">NVMe RAID</span><span class="feat-tag">25 GbE</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌐</div>
+        <div class="feat-title">Global Anycast Network</div>
+        <div class="feat-desc">Route traffic intelligently across 18 global PoPs. Our proprietary Anycast routing ensures sub-10ms latency for 95% of internet users worldwide.</div>
+        <div class="feat-tags"><span class="feat-tag">BGP Anycast</span><span class="feat-tag">DDoS Shield</span><span class="feat-tag">SD-WAN</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔒</div>
+        <div class="feat-title">Zero-Trust Security</div>
+        <div class="feat-desc">Every request is authenticated and encrypted. Hardware-backed HSMs, mTLS everywhere, and continuous compliance scanning keep your data safe.</div>
+        <div class="feat-tags"><span class="feat-tag">SOC 2 Type II</span><span class="feat-tag">ISO 27001</span><span class="feat-tag">FIPS 140-2</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🤖</div>
+        <div class="feat-title">AI-Powered Autoscaling</div>
+        <div class="feat-desc">Predictive autoscaling uses ML models trained on your traffic patterns to provision resources before you need them — eliminating cold starts entirely.</div>
+        <div class="feat-tags"><span class="feat-tag">Predictive ML</span><span class="feat-tag">HPA/VPA</span><span class="feat-tag">KEDA</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📦</div>
+        <div class="feat-title">Container-Native Platform</div>
+        <div class="feat-desc">First-class Kubernetes support with managed control planes, automatic upgrades, and deep integration with our storage and networking stacks.</div>
+        <div class="feat-tags"><span class="feat-tag">K8s 1.30</span><span class="feat-tag">Helm v3</span><span class="feat-tag">GitOps</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🗄️</div>
+        <div class="feat-title">Distributed Object Storage</div>
+        <div class="feat-desc">Infinitely scalable S3-compatible object store with 11-nines durability. Geo-redundant replication and intelligent tiering for cost optimization.</div>
+        <div class="feat-tags"><span class="feat-tag">S3 API</span><span class="feat-tag">11x 9s</span><span class="feat-tag">Geo-HA</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SERVICES PAGE
+══════════════════════════════════════ -->
+<div id="page-services" class="page">
+  <div class="services-hero">
+    <div class="section-label">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Cloud Services
+    </div>
+    <h1 class="section-title au au1">Everything You Need<br><span class="grad" style="background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">in One Platform</span></h1>
+    <p class="section-sub au au2">From raw compute to fully managed AI inference — AKTech offers a complete portfolio of cloud services designed for performance and simplicity.</p>
+  </div>
+  <div class="services-grid" id="services-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ARCHITECTURE PAGE
+══════════════════════════════════════ -->
+<div id="page-architecture" class="page">
+  <div class="arch-wrap">
+    <div class="section-label">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M9 19h6M12 11l-4 6M12 11l4 6"/></svg>
+      System Architecture
+    </div>
+    <h1 class="section-title au au1">AKTech Stack<br><span class="grad" style="background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Deep Dive</span></h1>
+    <p class="section-sub au au2">A layered, fault-tolerant architecture engineered for 99.99% availability and horizontal scalability across all dimensions.</p>
+
+    <div class="arch-diagram au au3">
+      <div class="arch-diagram-bg"></div>
+      <div class="arch-layers">
+        <div class="arch-layer">
+          <div class="arch-layer-icon">🌐</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Edge & CDN Layer</div>
+            <div class="arch-layer-desc">Global PoP network with Anycast routing, DDoS mitigation, and TLS termination</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">Anycast</span><span class="arch-node">WAF</span><span class="arch-node">CDN</span><span class="arch-node">DDoS</span>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer">
+          <div class="arch-layer-icon">⚖️</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Load Balancing & API Gateway</div>
+            <div class="arch-layer-desc">L4/L7 load balancers with health checks, circuit breakers, and rate limiting</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">L7 LB</span><span class="arch-node">API GW</span><span class="arch-node">mTLS</span><span class="arch-node">Rate Limit</span>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer">
+          <div class="arch-layer-icon">📦</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Kubernetes Orchestration Layer</div>
+            <div class="arch-layer-desc">Managed K8s with multi-cluster federation, RBAC, and GitOps deployment pipelines</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">K8s 1.30</span><span class="arch-node">Istio</span><span class="arch-node">ArgoCD</span><span class="arch-node">HPA</span>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer">
+          <div class="arch-layer-icon">⚡</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Compute & Virtualization Layer</div>
+            <div class="arch-layer-desc">KVM hypervisors on bare-metal with SR-IOV networking and NVMe pass-through</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">KVM</span><span class="arch-node">QEMU</span><span class="arch-node">SR-IOV</span><span class="arch-node">NUMA</span>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer">
+          <div class="arch-layer-icon">🗄️</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Distributed Storage Layer</div>
+            <div class="arch-layer-desc">Ceph-based object, block, and file storage with erasure coding and geo-replication</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">Ceph 18</span><span class="arch-node">NVMe</span><span class="arch-node">S3 API</span><span class="arch-node">NFS</span>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer">
+          <div class="arch-layer-icon">🔒</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">Security & Observability</div>
+            <div class="arch-layer-desc">Unified telemetry with OpenTelemetry, Prometheus, Loki, and hardware HSMs</div>
+          </div>
+          <div class="arch-layer-nodes">
+            <span class="arch-node">OTel</span><span class="arch-node">Prometheus</span><span class="arch-node">Grafana</span><span class="arch-node">HSM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="au" style="font-size:18px;font-weight:700;margin-bottom:20px;letter-spacing:-0.3px;">Technical Specifications</h3>
+    <div class="arch-specs-grid">
+      <div class="spec-card">
+        <div class="spec-title"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/></svg>Compute</div>
+        <div class="spec-row"><span class="spec-key">CPU</span><span class="spec-val">AMD EPYC 9654 (96C)</span></div>
+        <div class="spec-row"><span class="spec-key">Memory</span><span class="spec-val">6 TB DDR5 ECC</span></div>
+        <div class="spec-row"><span class="spec-key">GPU</span><span class="spec-val">NVIDIA H100 80GB</span></div>
+        <div class="spec-row"><span class="spec-key">Hypervisor</span><span class="spec-val">KVM / QEMU 8.1</span></div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-title"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Storage</div>
+        <div class="spec-row"><span class="spec-key">Primary</span><span class="spec-val">NVMe Gen5 RAID-10</span></div>
+        <div class="spec-row"><span class="spec-key">Object</span><span class="spec-val">Ceph 18 (Reef)</span></div>
+        <div class="spec-row"><span class="spec-key">Durability</span><span class="spec-val">99.999999999%</span></div>
+        <div class="spec-row"><span class="spec-key">IOPS</span><span class="spec-val">12M read / 8M write</span></div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-title"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Network</div>
+        <div class="spec-row"><span class="spec-key">Uplink</span><span class="spec-val">400 GbE per node</span></div>
+        <div class="spec-row"><span class="spec-key">Latency</span><span class="spec-val">&lt;1ms intra-region</span></div>
+        <div class="spec-row"><span class="spec-key">Protocol</span><span class="spec-val">BGP + OSPF</span></div>
+        <div class="spec-row"><span class="spec-key">Transit</span><span class="spec-val">20 Tbps total</span></div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-title"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Security</div>
+        <div class="spec-row"><span class="spec-key">Encryption</span><span class="spec-val">AES-256-GCM</span></div>
+        <div class="spec-row"><span class="spec-key">Auth</span><span class="spec-val">mTLS + SPIFFE/SPIRE</span></div>
+        <div class="spec-row"><span class="spec-key">HSM</span><span class="spec-val">Thales Luna 7</span></div>
+        <div class="spec-row"><span class="spec-key">Compliance</span><span class="spec-val">SOC2, ISO27001</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PRICING PAGE
+══════════════════════════════════════ -->
+<div id="page-pricing" class="page">
+  <div class="pricing-wrap">
+    <div class="section-label">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Transparent Pricing
+    </div>
+    <h1 class="section-title au au1">Simple, Scalable<br><span class="grad" style="background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Cloud Pricing</span></h1>
+    <p class="section-sub au au2">Pay only for what you use. No hidden fees, no vendor lock-in. Scale from a single VM to a global multi-cluster deployment.</p>
+    <div class="pricing-grid">
+      <div class="plan-card au au1">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><sup>$</sup>0<span class="period"> / mo</span></div>
+        <div class="plan-desc">Perfect for students, developers, and personal projects.</div>
+        <ul class="plan-features">
+          <li><span class="pf-check pf-yes">✓</span>2 vCPUs · 4 GB RAM</li>
+          <li><span class="pf-check pf-yes">✓</span>50 GB NVMe Storage</li>
+          <li><span class="pf-check pf-yes">✓</span>1 TB Bandwidth/mo</li>
+          <li><span class="pf-check pf-yes">✓</span>Community Support</li>
+          <li><span class="pf-check pf-yes">✓</span>Basic Monitoring</li>
+          <li><span class="pf-check pf-no">✗</span>Multi-region Failover</li>
+          <li><span class="pf-check pf-no">✗</span>SLA Guarantee</li>
+          <li><span class="pf-check pf-no">✗</span>Dedicated Support</li>
+        </ul>
+        <button class="plan-cta plan-cta-outline" onclick="showToast('Starter plan selected — Free forever!')">Start Free</button>
+      </div>
+      <div class="plan-card featured au au2">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><sup>$</sup>49<span class="period"> / mo</span></div>
+        <div class="plan-desc">For growing teams and production workloads that need reliability.</div>
+        <ul class="plan-features">
+          <li><span class="pf-check pf-yes">✓</span>16 vCPUs · 64 GB RAM</li>
+          <li><span class="pf-check pf-yes">✓</span>500 GB NVMe Storage</li>
+          <li><span class="pf-check pf-yes">✓</span>20 TB Bandwidth/mo</li>
+          <li><span class="pf-check pf-yes">✓</span>Priority Support 24/7</li>
+          <li><span class="pf-check pf-yes">✓</span>Advanced Monitoring</li>
+          <li><span class="pf-check pf-yes">✓</span>Multi-region Failover</li>
+          <li><span class="pf-check pf-yes">✓</span>99.95% SLA</li>
+          <li><span class="pf-check pf-no">✗</span>Dedicated Hardware</li>
+        </ul>
+        <button class="plan-cta plan-cta-solid" onclick="showToast('Pro plan — Activating trial! 🚀')">Start 14-Day Trial</button>
+      </div>
+      <div class="plan-card au au3">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price"><sup>$</sup>299<span class="period"> / mo</span></div>
+        <div class="plan-desc">For mission-critical deployments demanding maximum performance and SLA.</div>
+        <ul class="plan-features">
+          <li><span class="pf-check pf-yes">✓</span>128 vCPUs · 512 GB RAM</li>
+          <li><span class="pf-check pf-yes">✓</span>10 TB NVMe Storage</li>
+          <li><span class="pf-check pf-yes">✓</span>Unlimited Bandwidth</li>
+          <li><span class="pf-check pf-yes">✓</span>Dedicated Account Manager</li>
+          <li><span class="pf-check pf-yes">✓</span>Full Observability Stack</li>
+          <li><span class="pf-check pf-yes">✓</span>Active-Active Multi-region</li>
+          <li><span class="pf-check pf-yes">✓</span>99.99% SLA</li>
+          <li><span class="pf-check pf-yes">✓</span>Dedicated Hardware</li>
+        </ul>
+        <button class="plan-cta plan-cta-outline" onclick="showToast('Enterprise — Our team will contact you!')">Contact Sales</button>
+      </div>
+    </div>
+
+    <!-- Usage Pricing -->
+    <div style="margin-top:48px;">
+      <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.4px;margin-bottom:24px;">Pay-as-You-Go Resources</h3>
+      <div class="arch-specs-grid">
+        <div class="spec-card">
+          <div class="spec-title">⚡ Compute</div>
+          <div class="spec-row"><span class="spec-key">vCPU-hour</span><span class="spec-val">$0.008</span></div>
+          <div class="spec-row"><span class="spec-key">RAM GB-hour</span><span class="spec-val">$0.004</span></div>
+          <div class="spec-row"><span class="spec-key">GPU H100 hour</span><span class="spec-val">$2.49</span></div>
+          <div class="spec-row"><span class="spec-key">Spot discount</span><span class="spec-val">Up to 80%</span></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-title">🗄️ Storage</div>
+          <div class="spec-row"><span class="spec-key">Block NVMe/GB</span><span class="spec-val">$0.12/mo</span></div>
+          <div class="spec-row"><span class="spec-key">Object S3/GB</span><span class="spec-val">$0.021/mo</span></div>
+          <div class="spec-row"><span class="spec-key">Cold Archive/GB</span><span class="spec-val">$0.004/mo</span></div>
+          <div class="spec-row"><span class="spec-key">Snapshots/GB</span><span class="spec-val">$0.06/mo</span></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-title">🌐 Network</div>
+          <div class="spec-row"><span class="spec-key">Egress (first TB)</span><span class="spec-val">$0.09/GB</span></div>
+          <div class="spec-row"><span class="spec-key">Egress (next 9TB)</span><span class="spec-val">$0.07/GB</span></div>
+          <div class="spec-row"><span class="spec-key">Ingress</span><span class="spec-val">Free</span></div>
+          <div class="spec-row"><span class="spec-key">CDN requests</span><span class="spec-val">$0.0008/1K</span></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-title">🤖 AI / ML</div>
+          <div class="spec-row"><span class="spec-key">Inference/1K tokens</span><span class="spec-val">$0.002</span></div>
+          <div class="spec-row"><span class="spec-key">Training GPU-hr</span><span class="spec-val">$2.49</span></div>
+          <div class="spec-row"><span class="spec-key">Vector DB/1M ops</span><span class="spec-val">$0.10</span></div>
+          <div class="spec-row"><span class="spec-key">Fine-tuning job</span><span class="spec-val">From $9.99</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     DASHBOARD PAGE
+══════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dash-wrap">
+    <div class="dash-top">
+      <div>
+        <div class="dash-title">AKTech Control Center</div>
+        <div class="dash-subtitle">Real-time infrastructure monitoring · Last updated: <span id="last-updated">just now</span></div>
+      </div>
+      <div class="dash-actions">
+        <div class="clock-pill">
+          <div class="clock-dot"></div>
+          <span id="dash-clock">Live</span>
+        </div>
+        <button class="dash-refresh" onclick="refreshDashboard()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Refresh
+        </button>
+        <button class="cta-btn" style="font-size:12px;padding:7px 16px;" onclick="showToast('Deploying new instance... 🚀')">+ Deploy</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="dash-grid">
+      <div class="dash-panel">
+        <div class="panel-header">
+          <div class="panel-title">Request Throughput (req/s)</div>
+          <div class="panel-badge">Live</div>
+        </div>
+        <div class="chart-wrap">
+          <svg class="chart-svg" id="throughput-chart" viewBox="0 0 600 160" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+      <div class="dash-panel">
+        <div class="panel-header">
+          <div class="panel-title">Traffic by Region</div>
+        </div>
+        <div class="region-list" id="region-list"></div>
+      </div>
+    </div>
+
+    <div class="dash-bottom-grid">
+      <div class="dash-panel">
+        <div class="panel-header">
+          <div class="panel-title">System Logs</div>
+          <div class="panel-badge">Live</div>
+        </div>
+        <div class="log-list" id="log-list"></div>
+      </div>
+      <div class="dash-panel">
+        <div class="panel-header">
+          <div class="panel-title">Service Health</div>
+        </div>
+        <div id="sla-list"></div>
+      </div>
+      <div class="dash-panel">
+        <div class="panel-header">
+          <div class="panel-title">Resource Utilization</div>
+        </div>
+        <div id="util-bars"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABOUT PAGE
+══════════════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="about-wrap">
+    <div class="section-label">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      About AKTech
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="about-img-card au au1">
+          <div class="about-logo-big">AK</div>
+          <div class="about-name-big">AKTech Cloud</div>
+          <div class="about-tagline">A cloud computing platform designed and developed as a final-year project to demonstrate advanced distributed systems, network architecture, and infrastructure-as-code concepts.</div>
+          <div class="about-team-grid">
+            <div class="team-pill"><div class="team-role">Project Lead</div><div class="team-name">AK Developer</div></div>
+            <div class="team-pill"><div class="team-role">Architecture</div><div class="team-name">Systems Design</div></div>
+            <div class="team-pill"><div class="team-role">Frontend</div><div class="team-name">UI / UX</div></div>
+            <div class="team-pill"><div class="team-role">Backend</div><div class="team-name">APIs & Infra</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-info au au2">
+        <div class="about-section-title">Project Overview</div>
+        <p class="about-p">AKTech is a cloud computing platform prototype developed as a comprehensive academic project. It models a real-world Infrastructure-as-a-Service (IaaS) and Platform-as-a-Service (PaaS) provider, covering the full stack from physical hardware abstraction to developer-facing APIs.</p>
+        <p class="about-p">The project covers key cloud computing concepts including virtualization, distributed storage, container orchestration, networking, security, observability, and cost management — all presented through a modern, production-quality web interface.</p>
+        <div class="about-pills">
+          <span class="about-pill">Cloud Computing</span>
+          <span class="about-pill">Distributed Systems</span>
+          <span class="about-pill">Kubernetes</span>
+          <span class="about-pill">Networking</span>
+          <span class="about-pill">Security</span>
+          <span class="about-pill">IaaS / PaaS</span>
+        </div>
+        <div class="about-section-title">Project Timeline</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">PHASE 1 — Research</div><div class="tl-text">Literature review of cloud architectures, IaaS/PaaS models, and existing platforms (AWS, GCP, Azure).</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">PHASE 2 — Design</div><div class="tl-text">Architecture design, service catalog definition, pricing model, and system component specification.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">PHASE 3 — Development</div><div class="tl-text">Full-stack implementation of the platform UI, live dashboard, and interactive service explorer.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">PHASE 4 — Submission</div><div class="tl-text">Final documentation, presentation, and project submission with live demo.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.4px;margin-bottom:20px;">Contact & Submission</h3>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val">aktech@cloud.edu</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🏫</div>
+        <div class="contact-label">Institution</div>
+        <div class="contact-val">University · CS Dept.</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📅</div>
+        <div class="contact-label">Submission Year</div>
+        <div class="contact-val">2024 / 2025</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🔗</div>
+        <div class="contact-label">Subject</div>
+        <div class="contact-val">Cloud Computing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  var nb = document.querySelector('[data-page="' + id + '"]');
+  if (nb) nb.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════
+   CLOCK
+═══════════════════════════════════════ */
+function tickClock() {
+  var now = new Date();
+  var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+  var ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  var str = pad(h) + ':' + pad(m) + ':' + pad(s) + ' ' + ap;
+  var el = document.getElementById('clock');
+  if (el) el.textContent = str;
+  var dc = document.getElementById('dash-clock');
+  if (dc) dc.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+setInterval(tickClock, 1000);
+tickClock();
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+var toastTimer = null;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+
+/* ═══════════════════════════════════════
+   SERVICES DATA & RENDER
+═══════════════════════════════════════ */
+var SERVICES = [
+  {
+    emoji: "⚡", name: "AKCompute", badge: "CORE", badgeClass: "sb-core",
+    tc1: "#060914", tc2: "#0d1a2e", tglow: "rgba(14,165,233,0.25)",
+    desc: "High-performance virtual machines from 1 vCPU to 128 vCPUs. Choose from general-purpose, compute-optimized, memory-optimized, and GPU instances.",
+    features: ["AMD EPYC & Intel Xeon processors", "NVMe SSD local storage included", "Live migration with zero downtime", "Spot instances with 80% discount"],
+    price: "$0.008", unit: "vCPU-hr"
+  },
+  {
+    emoji: "🗄️", name: "AKStore", badge: "CORE", badgeClass: "sb-core",
+    tc1: "#0a0a1a", tc2: "#1a0a2e", tglow: "rgba(99,102,241,0.25)",
+    desc: "Distributed object, block, and file storage with 11-nines durability. S3-compatible API with intelligent lifecycle tiering and geo-replication.",
+    features: ["S3-compatible REST API", "11x 9s durability (erasure coding)", "Geo-redundant replication across 3 AZs", "Intelligent cold storage tiering"],
+    price: "$0.021", unit: "GB/mo"
+  },
+  {
+    emoji: "🌐", name: "AKNet", badge: "CORE", badgeClass: "sb-core",
+    tc1: "#001a14", tc2: "#001a2e", tglow: "rgba(16,185,129,0.25)",
+    desc: "Software-defined networking with BGP Anycast routing, DDoS mitigation, and a global CDN spanning 18 PoPs for ultra-low latency delivery.",
+    features: ["BGP Anycast on 18 global PoPs", "Built-in 10 Tbps DDoS protection", "Managed SSL/TLS termination", "Private VPC with VPN & peering"],
+    price: "$0.09", unit: "GB egress"
+  },
+  {
+    emoji: "📦", name: "AKKube", badge: "NEW", badgeClass: "sb-new",
+    tc1: "#001a0a", tc2: "#0a1a00", tglow: "rgba(16,185,129,0.2)",
+    desc: "Fully managed Kubernetes 1.30 with auto-upgrading control plane, multi-cluster federation, GitOps pipelines, and deep AKTech storage integration.",
+    features: ["Managed K8s control plane (free)", "Auto-upgrade & security patching", "Cluster Autoscaler + KEDA", "Integrated Prometheus + Grafana"],
+    price: "$0.10", unit: "node-hr"
+  },
+  {
+    emoji: "🤖", name: "AKIntel", badge: "HOT", badgeClass: "sb-hot",
+    tc1: "#1a0014", tc2: "#0a0a2e", tglow: "rgba(168,85,247,0.25)",
+    desc: "Managed AI inference and training on NVIDIA H100 clusters. Deploy LLMs, fine-tune foundation models, and run vector similarity search at scale.",
+    features: ["NVIDIA H100 80GB GPU clusters", "Serverless inference endpoints", "Fine-tuning pipeline with LoRA", "Managed vector DB (pgvector)"],
+    price: "$2.49", unit: "GPU-hr"
+  },
+  {
+    emoji: "🗃️", name: "AKData", badge: "BETA", badgeClass: "sb-beta",
+    tc1: "#1a0a00", tc2: "#0a1a00", tglow: "rgba(245,158,11,0.2)",
+    desc: "Managed databases for every workload. PostgreSQL, MySQL, Redis, and Cassandra — all with automated backups, failover, and point-in-time recovery.",
+    features: ["Managed PostgreSQL 16 & MySQL 8", "Redis Cluster with persistence", "Apache Cassandra for time-series", "Automated PITR backups, 30-day retention"],
+    price: "$0.04", unit: "GB/mo"
+  }
+];
+
+function renderServices() {
+  var grid = document.getElementById('services-grid');
+  if (!grid) return;
+  grid.innerHTML = SERVICES.map(function(s) {
+    return '<div class="svc-card" onclick="showToast(\'Exploring ' + s.name + '...\')">' +
+      '<div class="svc-thumb">' +
+        '<div class="svc-thumb-bg" style="--tc1:' + s.tc1 + ';--tc2:' + s.tc2 + ';background:linear-gradient(135deg,' + s.tc1 + ',' + s.tc2 + ')"></div>' +
+        '<div class="svc-thumb-glow" style="--tglow:' + s.tglow + ';background:' + s.tglow + '"></div>' +
+        '<div class="svc-thumb-emoji">' + s.emoji + '</div>' +
+        '<div class="svc-badge ' + s.badgeClass + '">' + s.badge + '</div>' +
+      '</div>' +
+      '<div class="svc-body">' +
+        '<div class="svc-name">' + s.name + '</div>' +
+        '<div class="svc-desc">' + s.desc + '</div>' +
+        '<ul class="svc-features">' + s.features.map(function(f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
+        '<div class="svc-footer">' +
+          '<div class="svc-price">' + s.price + '<span> / ' + s.unit + '</span></div>' +
+          '<button class="btn-outline" style="padding:8px 16px;font-size:12px;" onclick="event.stopPropagation();showToast(\'Starting ' + s.name + ' trial! 🚀\')">Deploy →</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════ */
+var KPIs = [
+  { icon: "⚡", label: "Total Requests/s",  val: 48200,  unit: "",      trend: "+12%", tClass: "trend-up",  sub: "vs last hour" },
+  { icon: "🖥️", label: "Active Instances",  val: 1284,   unit: "",      trend: "+8",   tClass: "trend-up",  sub: "across 18 regions" },
+  { icon: "💾", label: "Storage Used",      val: "2.4",  unit: " PB",   trend: "0%",   tClass: "trend-ne",  sub: "of 10 PB capacity" },
+  { icon: "🌐", label: "Network I/O",       val: "1.8",  unit: " Tbps", trend: "+6%",  tClass: "trend-up",  sub: "aggregate throughput" },
+  { icon: "⏱️", label: "P99 Latency",       val: "8",    unit: " ms",   trend: "-2ms", tClass: "trend-up",  sub: "99th percentile" },
+  { icon: "🔒", label: "Security Events",   val: 0,      unit: "",      trend: "Clear",tClass: "trend-ne",  sub: "last 24 hours" },
+  { icon: "💰", label: "Est. Monthly Cost", val: "$12K", unit: "",      trend: "-3%",  tClass: "trend-up",  sub: "optimized by autoscaler" },
+  { icon: "🤖", label: "AI Inference Jobs", val: 892,    unit: "",      trend: "+24%", tClass: "trend-up",  sub: "running now" },
+];
+
+var REGIONS = [
+  { flag: "🇺🇸", name: "us-east-1 (Virginia)",   pct: 34 },
+  { flag: "🇩🇪", name: "eu-west-1 (Frankfurt)",   pct: 22 },
+  { flag: "🇮🇳", name: "ap-south-1 (Mumbai)",     pct: 18 },
+  { flag: "🇸🇬", name: "ap-east-1 (Singapore)",   pct: 14 },
+  { flag: "🇧🇷", name: "sa-east-1 (Sao Paulo)",   pct: 12 },
+];
+
+var LOG_MSGS = [
+  { lvl: "INFO", cls: "log-info",  msg: "Auto-scaled us-east-1 cluster from 120 to 134 nodes" },
+  { lvl: "OK",   cls: "log-ok",   msg: "Health check passed — all 18 regions nominal" },
+  { lvl: "WARN", cls: "log-warn", msg: "eu-west-1 CPU usage at 82% — autoscaler triggered" },
+  { lvl: "INFO", cls: "log-info", msg: "TLS certificate renewed for *.aktech.cloud (90d)" },
+  { lvl: "OK",   cls: "log-ok",   msg: "Snapshot completed: prod-db-vol-0482 (2.1 TB, 44s)" },
+  { lvl: "ERR",  cls: "log-err",  msg: "Retried connection to ap-east-1 — timeout (2 retries)" },
+  { lvl: "INFO", cls: "log-info", msg: "Deployed aktech-api:v3.14.2 to 12 regions successfully" },
+  { lvl: "WARN", cls: "log-warn", msg: "Rate limit approaching on /api/v1/inference endpoint" },
+];
+
+var SLA_SERVICES = [
+  { icon: "⚡", name: "AKCompute",  val: "99.99% uptime · 14ms avg", up: true },
+  { icon: "🗄️", name: "AKStore",   val: "100% · 1.8ms read latency", up: true },
+  { icon: "🌐", name: "AKNet CDN", val: "100% · 3.2ms edge latency", up: true },
+  { icon: "📦", name: "AKKube",    val: "99.97% · API server 8ms",   up: true },
+  { icon: "🤖", name: "AKIntel",   val: "99.91% · GPU util 78%",     up: false },
+  { icon: "🗃️", name: "AKData",    val: "100% · 2.4ms query time",   up: true },
+];
+
+var UTIL = [
+  { label: "CPU",     pct: 68, color: "#0ea5e9" },
+  { label: "Memory",  pct: 42, color: "#a78bfa" },
+  { label: "Storage", pct: 24, color: "#10b981" },
+  { label: "Network", pct: 81, color: "#f59e0b" },
+  { label: "GPU",     pct: 78, color: "#f472b6" },
+];
+
+function renderDashboard() {
+  var kg = document.getElementById('kpi-grid');
+  if (kg) {
+    kg.innerHTML = KPIs.map(function(k) {
+      return '<div class="kpi-card">' +
+        '<div class="kpi-header"><div class="kpi-icon">' + k.icon + '</div>' +
+        '<div class="kpi-trend ' + k.tClass + '">' + k.trend + '</div></div>' +
+        '<div class="kpi-val">' + k.val + k.unit + '</div>' +
+        '<div class="kpi-lbl">' + k.label + '</div>' +
+        '<div class="kpi-sub">' + k.sub + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  var rl = document.getElementById('region-list');
+  if (rl) {
+    rl.innerHTML = REGIONS.map(function(r) {
+      return '<div class="region-row">' +
+        '<div class="region-flag">' + r.flag + '</div>' +
+        '<div class="region-info">' +
+          '<div class="region-name">' + r.name + '</div>' +
+          '<div class="region-bar-wrap"><div class="region-bar" style="width:' + r.pct + '%"></div></div>' +
+        '</div>' +
+        '<div class="region-pct">' + r.pct + '%</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  var ll = document.getElementById('log-list');
+  if (ll) {
+    var now = new Date();
+    ll.innerHTML = LOG_MSGS.map(function(l, i) {
+      var t = new Date(now - i * 47000);
+      var ts = pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
+      return '<div class="log-row">' +
+        '<span class="log-lvl ' + l.cls + '">' + l.lvl + '</span>' +
+        '<span class="log-msg">' + l.msg + '</span>' +
+        '<span class="log-time">' + ts + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  var sl = document.getElementById('sla-list');
+  if (sl) {
+    sl.innerHTML = SLA_SERVICES.map(function(s) {
+      return '<div class="sla-item">' +
+        '<div class="sla-icon">' + s.icon + '</div>' +
+        '<div class="sla-info"><div class="sla-name">' + s.name + '</div><div class="sla-val">' + s.val + '</div></div>' +
+        '<div class="sla-status ' + (s.up ? 'sla-up' : 'sla-warn') + '"></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  var ub = document.getElementById('util-bars');
+  if (ub) {
+    ub.innerHTML = UTIL.map(function(u) {
+      return '<div style="margin-bottom:16px;">' +
+        '<div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;">' +
+          '<span>' + u.label + '</span><span style="color:' + u.color + '">' + u.pct + '%</span>' +
+        '</div>' +
+        '<div style="height:6px;background:var(--glass-md);border-radius:3px;overflow:hidden;">' +
+          '<div style="height:100%;width:' + u.pct + '%;background:' + u.color + ';border-radius:3px;transition:width 0.8s var(--ease);box-shadow:0 0 10px ' + u.color + '66;"></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  renderThroughputChart();
+}
+
+function renderThroughputChart() {
+  var svg = document.getElementById('throughput-chart');
+  if (!svg) return;
+  var pts = [];
+  for (var i = 0; i < 40; i++) {
+    var y = 80 + Math.sin(i * 0.4) * 40 + (Math.random() - 0.5) * 20;
+    pts.push({ x: i * 15, y: Math.max(20, Math.min(140, y)) });
+  }
+  var path = pts.map(function(p, i) { return (i === 0 ? 'M' : 'L') + p.x + ',' + p.y; }).join(' ');
+  var fill = path + ' L' + pts[pts.length - 1].x + ',160 L0,160 Z';
+
+  svg.innerHTML =
+    '<defs>' +
+      '<linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.4"/>' +
+        '<stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>' +
+      '</linearGradient>' +
+    '</defs>' +
+    '<path d="' + fill + '" fill="url(#cg)"/>' +
+    '<path d="' + path + '" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+}
+
+function refreshDashboard() {
+  KPIs[0].val = Math.floor(45000 + Math.random() * 8000);
+  KPIs[1].val = Math.floor(1250 + Math.random() * 80);
+  renderDashboard();
+  var lu = document.getElementById('last-updated');
+  if (lu) lu.textContent = 'just now';
+  showToast('Dashboard refreshed! Data updated.');
+}
+
+/* ═══════════════════════════════════════
+   MINI CHART (hero)
+═══════════════════════════════════════ */
+function renderMiniChart() {
+  var el = document.getElementById('mini-chart');
+  if (!el) return;
+  var bars = [55,70,45,82,60,90,48,76,63,88,55,72];
+  el.innerHTML = bars.map(function(h, i) {
+    return '<div class="mini-bar" style="height:' + h + '%;animation-delay:' + (i * 0.04) + 's"></div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════════
+   HERO CANVAS
+═══════════════════════════════════════ */
+function initCanvas() {
+  var canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (var i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * 1400,
+      y: Math.random() * 900,
+      r: Math.random() * 1.5 + 0.4,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      o: Math.random() * 0.5 + 0.1,
+      c: Math.random() > 0.5 ? '14,165,233' : '99,102,241'
+    });
+  }
+
+  function draw() {
+    if (!W || !H) { resize(); }
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(function(p) {
+      ctx.beginPath();
+      ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + p.c + ',' + p.o + ')';
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/* ═══════════════════════════════════════
+   LIVE METRICS (hero card)
+═══════════════════════════════════════ */
+function updateMetrics() {
+  var cpu = document.getElementById('m-cpu');
+  var mem = document.getElementById('m-mem');
+  var net = document.getElementById('m-net');
+  if (cpu) cpu.textContent = Math.floor(60 + Math.random() * 25) + '%';
+  if (mem) mem.textContent = Math.floor(35 + Math.random() * 20) + '%';
+  if (net) {
+    var n = (Math.random() * 2 + 0.5).toFixed(1);
+    net.textContent = n + ' Gbps';
+  }
+}
+
+/* ═══════════════════════════════════════
+   BOOT
+═══════════════════════════════════════ */
+renderServices();
+renderDashboard();
+renderMiniChart();
+initCanvas();
+setInterval(updateMetrics, 3000);
+setInterval(renderThroughputChart, 5000);
+</script>
+</body>
+</html>
